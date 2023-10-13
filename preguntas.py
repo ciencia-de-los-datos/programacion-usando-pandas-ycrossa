@@ -13,7 +13,7 @@ tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
 tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
 tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
 
-
+#print(tbl0.head())
 def pregunta_01():
     """
     ¿Cuál es la cantidad de filas en la tabla `tbl0.tsv`?
@@ -22,7 +22,7 @@ def pregunta_01():
     40
 
     """
-    return
+    return  len(tbl0)
 
 
 def pregunta_02():
@@ -33,7 +33,8 @@ def pregunta_02():
     4
 
     """
-    return
+    rows, colms = tbl0.shape
+    return colms
 
 
 def pregunta_03():
@@ -50,8 +51,7 @@ def pregunta_03():
     Name: _c1, dtype: int64
 
     """
-    return
-
+    return tbl0['_c1'].value_counts().sort_index() 
 
 def pregunta_04():
     """
@@ -65,7 +65,8 @@ def pregunta_04():
     E    4.785714
     Name: _c2, dtype: float64
     """
-    return
+    
+    return (tbl0.groupby("_c1")["_c2"].mean()).sort_index()
 
 
 def pregunta_05():
@@ -218,3 +219,18 @@ def pregunta_13():
     Name: _c5b, dtype: int64
     """
     return
+
+
+#print ("pregunta_01:",pregunta_01())
+#print ("pregunta_02:",pregunta_02())
+#print ("pregunta_03:",pregunta_03())
+#print ("pregunta_04:",pregunta_04())
+#print ("pregunta_05:",pregunta_05())
+#print ("pregunta_06:",pregunta_06())
+#print ("pregunta_07:",pregunta_07())
+#print ("pregunta_08:",pregunta_08())
+#print ("pregunta_09:",pregunta_09())
+#print ("pregunta_10:",pregunta_10())
+#print ("pregunta_11:",pregunta_11())
+#print ("pregunta_12:",pregunta_12())
+#print ("pregunta_13:",pregunta_13())
