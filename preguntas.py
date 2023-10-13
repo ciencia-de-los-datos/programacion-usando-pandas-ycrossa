@@ -13,7 +13,7 @@ tbl0 = pd.read_csv("tbl0.tsv", sep="\t")
 tbl1 = pd.read_csv("tbl1.tsv", sep="\t")
 tbl2 = pd.read_csv("tbl2.tsv", sep="\t")
 
-print(tbl0.info())
+#print(tbl0.info())
 def pregunta_01():
     """
     ¿Cuál es la cantidad de filas en la tabla `tbl0.tsv`?
@@ -168,7 +168,15 @@ def pregunta_10():
     3   D                  1:2:3:5:5:7
     4   E  1:1:2:3:3:4:5:5:5:6:7:8:8:9
     """
-    return
+    # Construye el resultado con la lista
+    result = tbl0.groupby('_c1')['_c2'].agg(list)
+    # organiza la lista y se une por :
+    result = result.apply(lambda x: ':'.join(map(str,sorted(x)))).reset_index()
+    # Nombres de columnas
+    result.columns = ["_c1","_c2"]
+    # C1 como index
+    result = result.set_index('_c1')
+    return result
 
 
 def pregunta_11():
@@ -187,7 +195,10 @@ def pregunta_11():
     38   38      d,e
     39   39    a,d,f
     """
-    return
+    result = tbl1.groupby('_c0')['_c4'].agg(list)
+    
+    result = result.apply(lambda x: ','.join(map(str,sorted(x)))).reset_index()
+    return result
 
 
 def pregunta_12():
@@ -205,7 +216,10 @@ def pregunta_12():
     38   38                    eee:0,fff:9,iii:2
     39   39                    ggg:3,hhh:8,jjj:5
     """
-    return
+    result = tbl2
+    result['_c5'] = result['_c5a'] + ':' + result['_c5b'].astype(str)
+    result = result.groupby('_c0')['_c5'].apply(lambda x: ','.join(map(str,sorted(x)))).reset_index()
+    return result
 
 
 def pregunta_13():
@@ -222,7 +236,10 @@ def pregunta_13():
     E    275
     Name: _c5b, dtype: int64
     """
-    return
+    
+    result = pd.merge(tbl0,tbl2)
+    #result.to_csv("res")
+    return result.groupby('_c1')['_c5b'].sum()
 
 
 #print ("pregunta_01:",pregunta_01())
